@@ -13,6 +13,7 @@ namespace SimplePayTR.Model
         public bool Is3D { get; set; }
 
         public string SuccessUrl { get; set; }
+
         public string ErrorUrl { get; set; }
 
         public int Id { get; set; }

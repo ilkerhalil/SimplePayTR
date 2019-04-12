@@ -5,32 +5,27 @@ using SimplePayTR.Helper;
 using SimplePayTR.Interfaces;
 using SimplePayTR.Model;
 
-namespace SimplePayTR.Network
+namespace SimplePayTR.Network.NestPayImpl
 {
-    internal class NestPayGateway : IGateway
+    internal class NestPayGateway : BaseGateway
     {
         private readonly IHttpClient _httpClient;
 
         public NestPayGateway(IHttpClient httpClient)
+        : base(httpClient)
         {
             _httpClient = httpClient;
         }
 
-        public Result Pay(BaseRequest request)
+        public override Result Pay(BaseRequest request)
         {
-            var prepare = new Post
-            {
-                Request = request,
-                ConfigName = !request.Is3D ? "EST_Pay.xml" : "EST_Pay_3D.cshtml",
-                ContentType = "application/x-www-form-urlencoded",
-                RequestFormat = HttpClientRequestFormat.Xml,
-                PreTag = "DATA="
-            };
-            var response = _httpClient.Post(prepare);
+            var nestPost = NestPostImpl.NestPost.CreatePost(request);
+            nestPost.ConfigName = "EST_Pay.xml";
+            var response = _httpClient.Post(nestPost);
             return Handler(response);
         }
 
-        private Result Handler(IHttpClientResponse serverResponse)
+        protected override Result Handler(IHttpClientResponse serverResponse)
         {
             var result = new Result { ResultContent = serverResponse.Content };
 
@@ -52,22 +47,15 @@ namespace SimplePayTR.Network
             return result;
         }
 
-        public Result Refund(BaseRequest request)
+        public override Result Refund(BaseRequest request)
         {
-            var prepare = new Post
-            {
-                Request = request,
-                ConfigName = "EST_Refound.xml",
-                ContentType = "application/x-www-form-urlencoded",
-                RequestFormat = HttpClientRequestFormat.Xml,
-                PreTag = "DATA="
-            };
-
-            var response =  _httpClient.Post(prepare);
+            var nestPost = NestPostImpl.NestPost.CreatePost(request);
+            nestPost.ConfigName = "EST_Pay.xml";
+            var response = _httpClient.Post(nestPost);
             return Handler(response);
         }
 
-        public List<NetworkConfigurationModel> GetNetworkConfiguration()
+        public override List<NetworkConfigurationModel> GetNetworkConfiguration()
         {
             var model = new List<NetworkConfigurationModel>
             {
@@ -98,7 +86,7 @@ namespace SimplePayTR.Network
             return model;
         }
 
-        public Result Pay3D(BaseRequest request, System.Collections.Specialized.NameValueCollection collection)
+        public override Result Pay3D(BaseRequest request, System.Collections.Specialized.NameValueCollection collection)
         {
             var result = new Result(false, "İmza Doğrulanamadı!");
             if (!Check3D(collection, request.Accounts))
@@ -112,20 +100,13 @@ namespace SimplePayTR.Network
             request.Accounts.Add("PayerAuthenticationCode", collection.Get("cavv"));
             request.Accounts.Add("CardNumber", collection.Get("md"));
 
-            var prepare = new Post
-            {
-                Request = request,
-                ConfigName = "EST_Pay_3DEnd.xml",
-                ContentType = "application/x-www-form-urlencoded",
-                RequestFormat = HttpClientRequestFormat.Xml,
-                PreTag = "DATA="
-            };
-
-            var response=   _httpClient.Post(prepare);
+            var nestPost = NestPostImpl.NestPost.CreatePost(request);
+            nestPost.ConfigName = "EST_Pay_3DEnd.xml";
+            var response = _httpClient.Post(nestPost);
             return Handler(response);
         }
 
-        public bool Check3D(System.Collections.Specialized.NameValueCollection formCollection, Dictionary<string, object> accounts)
+        public override bool Check3D(System.Collections.Specialized.NameValueCollection formCollection, Dictionary<string, object> accounts)
         {
             var hashparams = formCollection.Get("HASHPARAMS");
             var hashparamsval = formCollection.Get("HASHPARAMSVAL");

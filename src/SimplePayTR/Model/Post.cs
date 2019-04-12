@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using SimplePayTR.Interfaces;
-using SimplePayTR.Model;
 
-namespace SimplePayTR
+namespace SimplePayTR.Model
 {
     public class Post
     {
@@ -26,6 +25,9 @@ namespace SimplePayTR
         public HttpClientMethod Method { get; set; }
 
         public Dictionary<string, object> Parameters { get; set; }
+
+
+
 
     }
 }

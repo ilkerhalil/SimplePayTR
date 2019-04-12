@@ -17,39 +17,23 @@ namespace SimplePayTR.Network.DenizbankImpl
 
         public override Result Pay(BaseRequest request)
         {
-            var prepare = new Post
-            {
-                Request = request,
-                ConfigName = !request.Is3D ? "GB_Pay.xml" : "DB_Pay_3D.cshtml",
-                ContentType = "text/xml",
-                RequestFormat = HttpClientRequestFormat.Xml,
-                PreTag = ""
-            };
-
-            var response =  _httpClient.Post(prepare);
+            var denizBankPost = DenizBankPostImpl.DenizBankPost.CreatePost(request);
+            denizBankPost.ConfigName = !request.Is3D ? "GB_Pay.xml" : "DB_Pay_3D.cshtml";
+            var response =  _httpClient.Post(denizBankPost);
             return Handler(response);
         }
 
         public override Result Refund(BaseRequest request)
         {
-            var prepare = new Post
-            {
-                Request = request,
-                ConfigName = "DB_Refound.xml",
-                ContentType = "text/xml",
-                RequestFormat =  HttpClientRequestFormat.Xml,
-                PreTag = ""
-            };
-
-            var response=  _httpClient.Post(prepare);
+            var denizBankPost = DenizBankPostImpl.DenizBankPost.CreatePost(request);
+            denizBankPost.ConfigName = "DB_Refound.xml";
+            var response=  _httpClient.Post(denizBankPost);
             return Handler(response);
         }
 
         protected override Result Handler(IHttpClientResponse serverResponse)
         {
             var result = new Result {ResultContent = serverResponse.Content};
-
-            
             var hostResponse = ModelHelper.GetInlineContent(result.ResultContent, "Message");
             if (hostResponse == "Approved")
             {
@@ -117,13 +101,6 @@ namespace SimplePayTR.Network.DenizbankImpl
                     Key = "StoreKey", Value = "", Description = "3D - Şifre", NetworkType = NetworkType.Garanti
                 }
             };
-
-
-
-
-
-
-
             return model;
         }
 
@@ -135,12 +112,13 @@ namespace SimplePayTR.Network.DenizbankImpl
                 ErrorCode = "XXX000",
                 Status = collection["3DStatus"].StartsWith("-") == false
             };
-            if (result.Status)
+            if (!result.Status)
             {
-                result.ReferenceNumber = collection["HostRefNum"];
-                result.ProvisionNumber = collection["AuthCode"];
-                result.Status = true;
+                return result;
             }
+            result.ReferenceNumber = collection["HostRefNum"];
+            result.ProvisionNumber = collection["AuthCode"];
+            result.Status = true;
 
             return result;
         }

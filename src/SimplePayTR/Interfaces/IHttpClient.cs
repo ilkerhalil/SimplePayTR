@@ -1,4 +1,6 @@
-﻿namespace SimplePayTR.Interfaces
+﻿using SimplePayTR.Model;
+
+namespace SimplePayTR.Interfaces
 {
     public interface IHttpClient
     {

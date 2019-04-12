@@ -1,18 +1,26 @@
-﻿using SimplePayTR.Model;
+﻿using SimplePayTR.Interfaces;
+using SimplePayTR.Model;
 
 namespace SimplePayTR.Network.DenizbankImpl.DenizBankPostImpl
 {
-    public class DenizBankPost:SimplePayTR.Post
+    public class DenizBankPost:Post
     {
-        DenizBankPost()
+        private DenizBankPost()
         {
             
         }
 
         public static DenizBankPost CreatePost(BaseRequest request)
         {
-
-
+            var prepare = new DenizBankPost()
+            {
+                Request = request,
+                
+                ContentType = "text/xml",
+                RequestFormat = HttpClientRequestFormat.Xml,
+                PreTag = ""
+            };
+            return prepare;
         }
 
     }

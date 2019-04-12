@@ -61,9 +61,10 @@
     <Compile Include="NetworkType.cs" />
     <Compile Include="Network\DenizbankImpl\DenizBankGateway.cs" />
     <Compile Include="Network\DenizbankImpl\DenizBankPostImpl\DenizBankPost.cs" />
+    <Compile Include="Network\NestPayImpl\NestPostImpl\NestPost.cs" />
     <Compile Include="Network\VakıfBankGateway.cs" />
     <Compile Include="Network\YapıKrediGateway.cs" />
-    <Compile Include="Network\NestPay.cs" />
+    <Compile Include="Network\NestPayImpl\NestPay.cs" />
     <Compile Include="Network\GarantiBankGateway.cs" />
     <Compile Include="Model\Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
