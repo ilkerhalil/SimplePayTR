@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
+using SimplePayTR.Model;
 
-namespace SimplePayTR
+namespace SimplePayTR.Interfaces
 {
-    public interface IGate
+    public interface IGateway
     {
-        Result Pay(Request request);
+        Result Pay(BaseRequest request);
 
-        Result Refound(Request request);
+        Result Refund(BaseRequest request);
 
-        Result Pay3D(Request request, NameValueCollection collection);
+        Result Pay3D(BaseRequest request, NameValueCollection collection);
 
         bool Check3D(NameValueCollection formCollection, Dictionary<string, object> accounts);
 

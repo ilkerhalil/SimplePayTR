@@ -1,15 +1,17 @@
-﻿@{
+﻿@using System
+@using SimplePayTR.Helper
+@{
     var total = Convert.ToInt32(Convert.ToDecimal(Model.Pay.Total) * 100);
     var processId = string.Format("{0}_{1}", DateTime.Now.ToString("ddMMyyyyhhmmss"), Model.Pay.ProcessId.ToUpper());
     var instalment = "";
 
     var password = string.Format("{0}0{1}", Model.Account.Password, Model.Account.TerminalId);
-    var hashPass = SimplePayTR.Model.GetSHA1(password).ToUpper();
+    var hashPass = HashHelper.GetSha1(password).ToUpper();
 
 
     var hashValue = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", Model.Account.TerminalId, processId, total, Model.Extra.SuccessUrl, Model.Extra.ErrorUrl, "gpdatarequest", instalment, Model.Account.StoreKey, hashPass);
 
-    var newhashValue = SimplePayTR.Model.GetSHA1(hashValue).ToUpper();
+    var newhashValue = SimplePayTR.Helper.HashHelper.GetSha1(hashValue).ToUpper();
 
     
 }

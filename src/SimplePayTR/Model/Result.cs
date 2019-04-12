@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimplePayTR
+﻿namespace SimplePayTR.Model
 {
     public class Result
     {
@@ -16,15 +10,13 @@ namespace SimplePayTR
 
         public string ProvisionNumber { get; set; }
 
-        public string ReferanceNumber { get; set; }
+        public string ReferenceNumber { get; set; }
 
         public string ProcessId { get; set; }
 
         public string Error { get; set; }
 
         public string ErrorCode { get; set; }
-
-        public NetworkType iNetworkType { get; set; }
 
         public Result() { }
 
@@ -34,7 +26,7 @@ namespace SimplePayTR
             Status = status;
         }
 
-        public Request RequestData { get; set; }
+        public BaseRequest RequestData { get; set; }
 
     }
 

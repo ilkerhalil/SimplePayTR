@@ -1,33 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimplePayTR
+﻿namespace SimplePayTR
 {
     public enum NetworkType
     {
         /// <summary>
         /// Genel
         /// </summary>
-        EST,
+        NestPay,
         /// <summary>
         /// Garanti
         /// </summary>
-        GB,
+        Garanti,
         /// <summary>
         /// Yapı Kredi
         /// </summary>
-        YKB,
+        YapiKredi,
       
         Paypal,
         PayU,
         None,
-        VPOS,
+        Vakifbank,
         /// <summary>
         /// Deniz Bank
         /// </summary>
-        DB
+        DenizBank
     }
 }

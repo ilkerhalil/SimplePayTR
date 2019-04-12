@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimplePayTR
+﻿namespace SimplePayTR
 {
     public class NetworkConfigurationModel
     {
@@ -14,7 +8,7 @@ namespace SimplePayTR
 
         public string Description { get; set; }
 
-        public NetworkType iType { get; set; }
+        public NetworkType NetworkType { get; set; }
     }
 
 

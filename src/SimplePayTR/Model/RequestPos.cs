@@ -1,28 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimplePayTR
+﻿namespace SimplePayTR.Model
 {
-    public class Request
-    {
-        public string Url { get; set; }
-
-        public Dictionary<string, object> Accounts { get; set; }
-        
-        public RequestPos Pos { get; set; }
-
-        public bool Is3D { get; set; }
-
-        public string SuccessUrl { get; set; }
-        public string ErrorUrl { get; set; }
-
-        public int Id { get; set; }
-
-    }
-
     public class RequestPos {
 
         public RequestPos()

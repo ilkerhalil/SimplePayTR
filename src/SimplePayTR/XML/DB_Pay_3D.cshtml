@@ -1,4 +1,5 @@
-﻿@{
+﻿@using System
+@{
     string total = Convert.ToDecimal(Model.Pay.Total).ToString("N2").Replace(".", "").Replace(",", ".");
     string rnd = DateTime.Now.ToString();
     string txnType = "Auth";

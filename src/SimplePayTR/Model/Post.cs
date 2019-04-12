@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RestSharp;
+﻿using System.Collections.Generic;
+using SimplePayTR.Interfaces;
+using SimplePayTR.Model;
 
 namespace SimplePayTR
 {
     public class Post
     {
         public Post() {
-            Method = RestSharp.Method.POST;
+            Method = HttpClientMethod.Post;
             Parameters = new Dictionary<string, object>();
         }
 
-        public Request Request { get; set; }
+        public BaseRequest Request { get; set; }
 
-        public DataFormat RequestFormat { get; set; }
+        public HttpClientRequestFormat RequestFormat { get; set; }
 
         public string ContentType { get; set; }
 
@@ -26,7 +23,7 @@ namespace SimplePayTR
 
         public bool IsQueryParameter { get; set; }
 
-        public RestSharp.Method Method { get; set; }
+        public HttpClientMethod Method { get; set; }
 
         public Dictionary<string, object> Parameters { get; set; }
 
